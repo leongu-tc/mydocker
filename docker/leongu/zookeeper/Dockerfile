@@ -1,0 +1,27 @@
+FROM leongu2003/jdk8:latest
+
+ENV ZOOKEEPER_VERSION "3.5.6"
+
+RUN mkdir /opt/zookeeper &&\
+	wget https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-$ZOOKEEPER_VERSION/apache-zookeeper-$ZOOKEEPER_VERSION-bin.tar.gz -P /opt/zookeeper
+
+RUN tar zxvf /opt/zookeeper/apache-zookeeper*.tar.gz -C /opt/zookeeper
+
+# RUN echo "source /root/.bash_profile" > /opt/zookeeper/start.sh &&\
+# 	echo "cp /opt/zookeeper/apache-zookeeper-"$ZOOKEEPER_VERSION"-bin/conf/zoo_sample.cfg /opt/zookeeper/apache-zookeeper-"$ZOOKEEPER_VERSION"-bin/conf/zoo.cfg" >> /opt/zookeeper/start.sh &&\
+# 	echo "/opt/zookeeper/apache-zookeeper-$"ZOOKEEPER_VERSION"-bin/bin/zkServer.sh start-foreground" >> /opt/zookeeper/start.sh
+
+RUN echo "source /root/.bash_profile" > /opt/zookeeper/start.sh &&\
+	echo "cp /opt/zookeeper/apache-zookeeper-"$ZOOKEEPER_VERSION"-bin/conf/zoo_sample.cfg /opt/zookeeper/apache-zookeeper-"$ZOOKEEPER_VERSION"-bin/conf/zoo.cfg" >> /opt/zookeeper/start.sh &&\
+	echo "[ ! -z $""ZOOKEEPER_PORT"" ] && sed -i 's%.*clientPort=.*$%clientPort='$""ZOOKEEPER_PORT'""%g'  /opt/zookeeper/apache-zookeeper-"$ZOOKEEPER_VERSION"-bin/conf/zoo.cfg" >> /opt/zookeeper/start.sh &&\
+	echo "[ ! -z $""ZOOKEEPER_ID"" ] && mkdir -p /tmp/zookeeper && echo $""ZOOKEEPER_ID > /tmp/zookeeper/myid" >> /opt/zookeeper/start.sh &&\
+	echo "[[ ! -z $""ZOOKEEPER_SERVERS"" ]] && for server in $""ZOOKEEPER_SERVERS""; do echo $""server"" >> /opt/zookeeper/apache-zookeeper-"$ZOOKEEPER_VERSION"-bin/conf/zoo.cfg; done" >> /opt/zookeeper/start.sh &&\
+	echo "/opt/zookeeper/apache-zookeeper-$"ZOOKEEPER_VERSION"-bin/bin/zkServer.sh start-foreground" >> /opt/zookeeper/start.sh
+
+EXPOSE 2181
+
+WORKDIR /opt/zookeeper/apache-zookeeper-$ZOOKEEPER_VERSION-bin
+
+ENTRYPOINT ["sh", "/opt/zookeeper/start.sh"]
+
+
