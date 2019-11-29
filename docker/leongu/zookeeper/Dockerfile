@@ -7,6 +7,9 @@ RUN mkdir /opt/zookeeper &&\
 
 RUN tar zxvf /opt/zookeeper/apache-zookeeper*.tar.gz -C /opt/zookeeper
 
+ENV ZOOKEEPER_HOME /opt/zookeeper/apache-zookeeper-$ZOOKEEPER_VERSION-bin
+ENV PATH $PATH:$ZOOKEEPER_HOME/bin
+
 # RUN echo "source /root/.bash_profile" > /opt/zookeeper/start.sh &&\
 # 	echo "cp /opt/zookeeper/apache-zookeeper-"$ZOOKEEPER_VERSION"-bin/conf/zoo_sample.cfg /opt/zookeeper/apache-zookeeper-"$ZOOKEEPER_VERSION"-bin/conf/zoo.cfg" >> /opt/zookeeper/start.sh &&\
 # 	echo "/opt/zookeeper/apache-zookeeper-$"ZOOKEEPER_VERSION"-bin/bin/zkServer.sh start-foreground" >> /opt/zookeeper/start.sh
