@@ -8,6 +8,9 @@ RUN mkdir /opt/kafka &&\
 RUN tar zxvf /opt/kafka/kafka*.tgz -C /opt/kafka &&\
 	sed -i 's/num.partitions.*$/num.partitions=3/g' /opt/kafka/kafka_2.11-$KAFKA_VERSION/config/server.properties
 
+ENV KAFKA_HOME /opt/kafka/kafka_2.11-$KAFKA_VERSION
+ENV PATH $PATH:$KAFKA_HOME/bin
+
 # RUN echo "source /root/.bash_profile" > /opt/kafka/start.sh &&\
 # 	echo "cd /opt/kafka/kafka_2.11-"$KAFKA_VERSION >> /opt/kafka/start.sh &&\
 # 	echo "sed -i 's%zookeeper.connect=.*$%zookeeper.connect=zookeeper:2181%g'  /opt/kafka/kafka_2.11-"$KAFKA_VERSION"/config/server.properties" >> /opt/kafka/start.sh &&\
@@ -32,4 +35,4 @@ EXPOSE 9092
 
 WORKDIR /opt/kafka/kafka_2.11-$KAFKA_VERSION
 
-# ENTRYPOINT ["sh", "/opt/kafka/start.sh"]
+ENTRYPOINT ["sh", "/opt/kafka/start.sh"]
