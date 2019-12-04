@@ -7,9 +7,14 @@ RUN mkdir /opt/java &&\
 
 RUN tar zxvf /opt/java/jdk-8u141-linux-x64.tar.gz -C /opt/java
 
+# jdk env
 ENV JAVA_HOME /opt/java/jdk1.8.0_141
 ENV JRE_HOME $JAVA_HOME/jre
 ENV PATH $PATH:$JAVA_HOME/bin
+
+# timezone
+RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN echo 'Asia/Shanghai' >/etc/timezone
 
 #RUN tar zxvf /opt/java/jdk-8u141-linux-x64.tar.gz -C /opt/java &&\
 #	JAVA_HOME=/opt/java/jdk1.8.0_141 &&\

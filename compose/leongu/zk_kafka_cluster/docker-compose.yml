@@ -71,7 +71,7 @@ services:
     ports:
       - "9092:9092"
     environment:
-      ZOOKEEPER_CONNECT: zookeeper0:2181,zookeeper1:2182,zookeeper2:2183
+      ZOOKEEPER_CONNECT: zookeeper0:2181/kafka,zookeeper1:2182/kafka,zookeeper2:2183/kafka
       BROKER_ID: 0
       BROKER_PORT: 9092
       ADVERTISED_HOST_NAME: kafka0
@@ -96,7 +96,7 @@ services:
     ports:
       - "9093:9093"
     environment:
-      ZOOKEEPER_CONNECT: zookeeper0:2181,zookeeper1:2182,zookeeper2:2183
+      ZOOKEEPER_CONNECT: zookeeper0:2181/kafka,zookeeper1:2182/kafka,zookeeper2:2183/kafka
       BROKER_ID: 1
       BROKER_PORT: 9093
       ADVERTISED_HOST_NAME: kafka1
@@ -121,7 +121,7 @@ services:
     ports:
       - "9094:9094"
     environment:
-      ZOOKEEPER_CONNECT: zookeeper0:2181,zookeeper1:2182,zookeeper2:2183
+      ZOOKEEPER_CONNECT: zookeeper0:2181/kafka,zookeeper1:2182/kafka,zookeeper2:2183/kafka
       BROKER_ID: 2
       BROKER_PORT: 9094
       ADVERTISED_HOST_NAME: kafka2
