@@ -6,6 +6,7 @@ RUN mkdir /opt/zookeeper &&\
 	wget https://mirrors.tuna.tsinghua.edu.cn/apache/zookeeper/zookeeper-$ZOOKEEPER_VERSION/apache-zookeeper-$ZOOKEEPER_VERSION-bin.tar.gz -P /opt/zookeeper
 
 RUN tar zxvf /opt/zookeeper/apache-zookeeper*.tar.gz -C /opt/zookeeper &&\
+    chown -R root:root /opt/zookeeper/ &&\
     echo "4lw.commands.whitelist=*" >> /opt/zookeeper/apache-zookeeper-$ZOOKEEPER_VERSION-bin/conf/zoo_sample.cfg
 
 ENV ZOOKEEPER_HOME /opt/zookeeper/apache-zookeeper-$ZOOKEEPER_VERSION-bin
