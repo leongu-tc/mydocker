@@ -6,6 +6,7 @@ RUN mkdir /opt/kafka &&\
 	wget http://mirror.bit.edu.cn/apache/kafka/$KAFKA_VERSION/kafka_2.11-$KAFKA_VERSION.tgz -P /opt/kafka
 
 RUN tar zxvf /opt/kafka/kafka*.tgz -C /opt/kafka &&\
+    chown -R root:root /opt/kafka/ &&\
 	sed -i 's/num.partitions.*$/num.partitions=3/g' /opt/kafka/kafka_2.11-$KAFKA_VERSION/config/server.properties &&\
 	echo -e "\ndelete.topic.enable=true" >> /opt/kafka/kafka_2.11-$KAFKA_VERSION/config/server.properties &&\
 	echo -e "#port=9092" >> /opt/kafka/kafka_2.11-$KAFKA_VERSION/config/server.properties &&\
